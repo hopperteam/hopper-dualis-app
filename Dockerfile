@@ -8,4 +8,5 @@ COPY package-lock.json/ /app/package-lock.json
 WORKDIR /app
 RUN npm install . --production
 
-ENTRYPOINT ["node", ".", "/var/hopper/config.json"]
+COPY web/ /app/web/
+ENTRYPOINT ["node", "main.js", "/var/hopper/config.json"]
