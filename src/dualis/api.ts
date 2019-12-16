@@ -2,23 +2,19 @@ import * as request from "request";
 import * as cheerio from "cheerio";
 import { UserGrades } from "./userGrades";
 
-export type DualisUser = {
-    username: string,
-    password: string
-}
 
 export class DualisApi {
     private sessionParams: string = "";
     private sessionCookie: string = "";
 
-    async login(user: DualisUser): Promise<boolean> {
+    async login(username: string, password: string): Promise<boolean> {
         let th = this;
         return new Promise<boolean>(function (resolve, error) {
 
             let x = request.post("https://dualis.dhbw.de/scripts/mgrqispi.dll", {
                 form: {
-                    usrname: user.username,
-                    pass: user.password,
+                    usrname: username,
+                    pass: password,
                     APPNAME: "CampusNet",
                     PRGNAME: "LOGINCHECK",
                     ARGUMENTS: "clino,usrname,pass,menuno,menu_type,browser,platform",

@@ -35,11 +35,11 @@ export default class HopperApi {
 
     public static async subscribeUser(username: string, res: express.Response): Promise<boolean> {
         var callback = null;
-        var subscribeRequest = { id: Config.instance.appId, callback: callback, accountName: username, requestedInfos: [] };
-        
-        var content = utils.encryptContent(subscribeRequest);
+        //var subscribeRequest = { id: Config.instance.appId, callback: callback, accountName: username, requestedInfos: [] };
 
-        res.redirect(Config.instance.hopperBaseUrl + '/subscribe?id=' + encodeURIComponent(Config.instance.appId) + '&content=' + encodeURIComponent(content));
+        //var content = utils.encryptContent(subscribeRequest);
+
+        //res.redirect(Config.instance.hopperBaseUrl + '/subscribe?id=' + encodeURIComponent(Config.instance.appId) + '&content=' + encodeURIComponent(content));
 
         return true;
     }

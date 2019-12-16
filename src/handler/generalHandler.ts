@@ -30,8 +30,7 @@ export default class GeneralHandler extends Handler {
                 throw new Error("Username is already in use");
 
             let api = new DualisApi();
-            let usr = { username: req.body.username, password: req.body.password };
-            if (!await api.login(usr)) {
+            if (!await api.login(req.body.username, req.body.password)) {
                 throw new Error("Invalid dualis credentials");
             }
 

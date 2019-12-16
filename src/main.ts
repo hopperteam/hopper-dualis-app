@@ -6,6 +6,7 @@ import { Config } from "./config";
 const log = new Log("DualisApp");
 
 import GeneralHandler from './handler/generalHandler';
+import {CheckDaemon} from "./daemon";
 
 class DualisApp {
 
@@ -64,6 +65,8 @@ class DualisApp {
         this.server.listen(Config.instance.port, () => {
             log.info("Server listening on port: " + Config.instance.port);
         });
+
+        setTimeout(CheckDaemon.runDaemon, 0)
     }
 }
 

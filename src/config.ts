@@ -19,6 +19,7 @@ export namespace Config {
         readonly passphrase: string;
         readonly privateKey: string;
         readonly publicKey: string;
+        readonly fetchInterval: number;
 
         constructor(data: any) {
             if (!data.dbHost || !data.dbUser || !data.dbPassword || !data.dbName || !data.passphrase || !data.hopperBaseUrl) {
@@ -33,6 +34,7 @@ export namespace Config {
             this.port = data.port || 80;
             this.hopperBaseUrl = data.hopperBaseUrl;
             this.passphrase = data.passphrase;
+            this.fetchInterval = data.fetchInterval || 60*5;
 
             if (!data.privateKey || !data.publicKey) {
                 let keypair: any = utils.getKeyPair(this.passphrase);
