@@ -39,12 +39,10 @@ export class CheckDaemon {
             }
 
             let grades = await dualis.getGrades();
-
             let diff = grades.getDiff(usr.grades);
-
-            if (diff != {}) {
+            if (Object.entries(diff).length !== 0) {
                 CheckDaemon.log.info(`Grades of user ${usr.username} got updated!`);
-                User.updateOne({username: usr.username}, {grades: grades.serialize()});
+                await User.updateOne({username: usr.username}, {grades: grades.serialize()});
             }
         }
     }
