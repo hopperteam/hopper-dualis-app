@@ -14,7 +14,7 @@ class DualisApp {
     constructor() {
         this.server = express();
         this.server.use(express.static("web", { 'extensions': ['html'] }));
-        this.server.use(bodyParser.json());
+        this.server.use(bodyParser.urlencoded());
     }
 
     private async loadConfig(): Promise<boolean> {
@@ -50,7 +50,7 @@ class DualisApp {
 
         //setInterval(AuthMiddleware.daemon, 60000);
 
-        this.server.use('/api/v1', new GeneralHandler().getRouter());
+        this.server.use(new GeneralHandler().getRouter());
 
         return true;
     }
