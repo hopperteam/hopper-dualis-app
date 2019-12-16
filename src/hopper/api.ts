@@ -32,11 +32,33 @@ export default class HopperApi {
     }
 
     public static async subscribeUser(username: string, res: express.Response): Promise<void> {
-        var callback = Config.instance.baseUrl + '/callback?username=' + username;
+        var callback = Config.instance.accessProtocol + "://" + Config.instance.baseUrl + '/callback?username=' + username;
         var subscribeRequest = { id: Config.instance.appId, callback: callback, accountName: username, requestedInfos: [] };
-        
+
         var content = utils.encryptContent(subscribeRequest);
 
         res.redirect(Config.instance.hopperBaseUrl + '/subscribe?id=' + encodeURIComponent(Config.instance.appId) + '&content=' + encodeURIComponent(content));
     }
+
+    public static async postNotification(subscriptionId: string, notification: Notification) {
+        let options = {
+            method: 'POST',
+            uri: Config.instance.hopperBaseUrl + "/api/v1/notification",
+            body: {
+                subscriptionId: subscriptionId,
+                notification: notification
+            },
+            json: true
+        };
+
+        let res = await rp(options);
+    }
+}
+
+export type Notification = {
+    readonly heading: string;
+    readonly timestamp: number;
+    readonly type: string;
+    readonly content: any;
+    readonly actions: object[];
 }
