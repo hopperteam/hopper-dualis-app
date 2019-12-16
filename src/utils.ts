@@ -44,17 +44,18 @@ export function getKeyPair(passphrase: string): any {
     return { privateKey: privateKey, publicKey: publicKey };
 }
 
-export function encryptContent(content: any): any {
-    content = JSON.stringify(content);
+export function encryptContent(subscribeRequest: any): any {
+    let contentJSON = JSON.stringify(subscribeRequest);
     const sha = crypto.createHash('sha256');
-    sha.update(content);
-    let hash = sha.digest('hex');
-    let encryptedHash = crypto.privateEncrypt(
+    sha.update(contentJSON);
+    let hash = Buffer.from(sha.digest('hex'));
+    let encrypted = crypto.privateEncrypt(
         {
             key: Config.instance.privateKey,
             passphrase: Config.instance.passphrase
         },
-        Buffer.from(hash));
-    let result = Buffer.from(JSON.stringify({ "verify": encryptedHash.toString(), "data": content })).toString('base64');
-    return result;
+        hash);
+    let obj = {"verify":encrypted.toString('base64'), "data": subscribeRequest};
+    console.log(obj)
+    return Buffer.from(JSON.stringify(obj)).toString('base64');
 }

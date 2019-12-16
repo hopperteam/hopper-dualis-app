@@ -39,8 +39,8 @@ export default class GeneralHandler extends Handler {
 
             await User.create(req.body);
             await HopperApi.subscribeUser(req.body.username, res);
-            utils.returnMessage("Success!", res);
         } catch (e) {
+            console.log(e);
             utils.handleError(e, log, res);
         }
     }
@@ -70,7 +70,7 @@ export default class GeneralHandler extends Handler {
         try {
             if (req.query.status == "error")
                 throw new Error("User did not authorize");
-            let user: IUser | null = await User.findOneAndUpdate({ username: req.body.username }, { subscription: req.query.subscriptionId });
+            let user: IUser | null = await User.findOneAndUpdate({ username: req.query.username }, { subscription: req.query.subscriptionId });
             if (!user)
                 throw new Error("Invalid user data");
             utils.returnMessage("Success!", res);

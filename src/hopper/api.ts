@@ -15,8 +15,8 @@ export default class HopperApi {
             "imageUrl": "https://pbs.twimg.com/profile_images/394388290/logo_400x400.jpg",
             "manageUrl": "https://dualis.dhbw.de",
             "contactEmail": "support@hoppercloud.net",
-            "cert": Config.instance.publicKey
-        }
+            "cert": Buffer.from(Config.instance.publicKey, ).toString('base64')
+        };
 
         let options = {
             method: 'POST',
@@ -36,7 +36,7 @@ export default class HopperApi {
         var subscribeRequest = { id: Config.instance.appId, callback: callback, accountName: username, requestedInfos: [] };
 
         var content = utils.encryptContent(subscribeRequest);
-
+        console.log("content: " + content)
         res.redirect(Config.instance.hopperBaseUrl + '/subscribe?id=' + encodeURIComponent(Config.instance.appId) + '&content=' + encodeURIComponent(content));
     }
 
