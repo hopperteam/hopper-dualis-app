@@ -11,9 +11,9 @@ export default class HopperApi {
 
         let obj = {
             "name": "DualisApp",
-            "baseUrl": "https://dualis.dhbw.de",
+            "baseUrl": Config.instance.accessProtocol + "://" + Config.instance.baseUrl,
             "imageUrl": "https://pbs.twimg.com/profile_images/394388290/logo_400x400.jpg",
-            "manageUrl": "https://dualis.dhbw.de",
+            "manageUrl": Config.instance.accessProtocol + "://" + Config.instance.baseUrl,
             "contactEmail": "support@hoppercloud.net",
             "cert": Buffer.from(Config.instance.publicKey, ).toString('base64')
         };
