@@ -7,7 +7,7 @@ import Log from '../log';
 const log = new Log("HopperApi");
 
 export default class HopperApi {
-    public static async registerApp(): Promise<boolean> {
+    public static async registerApp(): Promise<string> {
 
         let obj = {
             "name": "DualisApp",
@@ -26,11 +26,9 @@ export default class HopperApi {
         };
 
         let res = await rp(options);
-        if (res.status == "error") {
-            log.info("Could not app because " + res.reason);
-            return false;
-        }
-        return true;
+        if (res.status == "error")
+            throw new Error("Could not get appId because " + res.reason);
+        return res.id;
     }
 
     public static async subscribeUser(username: string, res: express.Response): Promise<boolean> {
