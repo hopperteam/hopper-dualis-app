@@ -3,6 +3,7 @@ import Handler from './handler';
 import Log from '../log';
 import * as utils from '../utils';
 import User, { IUser } from '../types/user';
+import {DualisApi} from "../dualis/api";
 
 const log: Log = new Log("GeneralHandler");
 
@@ -27,6 +28,13 @@ export default class GeneralHandler extends Handler {
         try {
             if (await User.findOne({ username: req.body.username }))
                 throw new Error("Username is already in use");
+
+            let api = new DualisApi();
+            let usr = { username: req.body.username, password: req.body.password };
+            if (!await api.login(usr)) {
+                throw new Error("Invalid dualis credentials");
+            }
+
             req.body.password = utils.encryptPassword(req.body.password);
             //subscribe user to hopper
             await User.create(req.body);
