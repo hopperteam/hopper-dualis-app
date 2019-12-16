@@ -1,4 +1,4 @@
-class UserGrades {
+export class UserGrades {
     public static deserialize(data: object): UserGrades {
         return new UserGrades();
     }
@@ -13,10 +13,9 @@ class UserGrades {
 
     }
 
+
     serialize(): object {
         return {};
     }
-
-
 
 }
