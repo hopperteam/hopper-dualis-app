@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, index: true },
     password: { type: String, required: true },
     subscription: { type: String },
-    grades: { type: Object }
+    grades: { type: Object , default: {}}
 }, {
     versionKey: false // set to true to keep track of version of document
 });
