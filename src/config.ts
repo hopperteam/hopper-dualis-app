@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as utils from './utils';
-import HopperApi from './hopper/api';
+import * as crypto from 'crypto';
 
 export namespace Config {
 
@@ -28,6 +28,7 @@ export namespace Config {
         readonly accessProtocol: string;
         readonly tokenCreationPassword: string;
         appId: string;
+        creationTokens: { [ index: string ]: boolean } = {};
 
         constructor(data: any) {
             if (!data.dbHost || !data.dbUser || !data.dbPassword || !data.dbName || !data.passphrase || !data.baseUrl || !data.hopperBaseUrl || !data.accessProtocol || !data.tokenCreationPassword) {
@@ -59,11 +60,17 @@ export namespace Config {
         }
 
         generateNewToken(): string {
-            return "";
+            let tk = crypto.randomBytes(8).toString('hex');
+            this.creationTokens[tk] = true;
+            return tk;
         }
 
-        tryToUseToken(): boolean {
-            return true;
+        tryToUseToken(tk: string): boolean {
+            if (tk in this.creationTokens) {
+                delete this.creationTokens.tk;
+                return true;
+            }
+            return false;
         }
     }
 
