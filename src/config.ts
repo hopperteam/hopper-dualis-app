@@ -19,6 +19,7 @@ export namespace Config {
         readonly dbName: string;
         readonly dbPort: number;
         readonly port: number;
+        readonly baseUrl: string;
         readonly hopperBaseUrl: string;
         readonly passphrase: string;
         readonly privateKey: string;
@@ -27,7 +28,7 @@ export namespace Config {
         appId: string;
 
         constructor(data: any) {
-            if (!data.dbHost || !data.dbUser || !data.dbPassword || !data.dbName || !data.passphrase || !data.hopperBaseUrl) {
+            if (!data.dbHost || !data.dbUser || !data.dbPassword || !data.dbName || !data.passphrase || !data.baseUrl || !data.hopperBaseUrl) {
                 throw new Error("Config incomplete!");
             }
 
@@ -37,6 +38,7 @@ export namespace Config {
             this.dbName = data.dbName;
             this.dbPort = data.dbPort || 27017;
             this.port = data.port || 80;
+            this.baseUrl = data.baseUrl;
             this.hopperBaseUrl = data.hopperBaseUrl;
             this.passphrase = data.passphrase;
             this.fetchInterval = data.fetchInterval || 60*5;

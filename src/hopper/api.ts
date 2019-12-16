@@ -31,14 +31,12 @@ export default class HopperApi {
         return res.id;
     }
 
-    public static async subscribeUser(username: string, res: express.Response): Promise<boolean> {
-        var callback = null;
-        //var subscribeRequest = { id: Config.instance.appId, callback: callback, accountName: username, requestedInfos: [] };
+    public static async subscribeUser(username: string, res: express.Response): Promise<void> {
+        var callback = Config.instance.baseUrl + '/callback?username=' + username;
+        var subscribeRequest = { id: Config.instance.appId, callback: callback, accountName: username, requestedInfos: [] };
+        
+        var content = utils.encryptContent(subscribeRequest);
 
-        //var content = utils.encryptContent(subscribeRequest);
-
-        //res.redirect(Config.instance.hopperBaseUrl + '/subscribe?id=' + encodeURIComponent(Config.instance.appId) + '&content=' + encodeURIComponent(content));
-
-        return true;
+        res.redirect(Config.instance.hopperBaseUrl + '/subscribe?id=' + encodeURIComponent(Config.instance.appId) + '&content=' + encodeURIComponent(content));
     }
 }
