@@ -1,0 +1,23 @@
+{
+  "name": "hopper-dualis-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hopperteam/hopper-dualis-app.git"
+  },
+  "author": "The hopper team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hopperteam/hopper-dualis-app/issues"
+  },
+  "homepage": "https://github.com/hopperteam/hopper-dualis-app#readme",
+  "dependencies": {
+    "typescript": "^3.7.3"
+  }
+}
