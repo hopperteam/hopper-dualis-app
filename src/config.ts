@@ -26,10 +26,11 @@ export namespace Config {
         readonly publicKey: string;
         readonly fetchInterval: number;
         readonly accessProtocol: string;
+        readonly tokenCreationPassword: string;
         appId: string;
 
         constructor(data: any) {
-            if (!data.dbHost || !data.dbUser || !data.dbPassword || !data.dbName || !data.passphrase || !data.baseUrl || !data.hopperBaseUrl || !data.accessProtocol) {
+            if (!data.dbHost || !data.dbUser || !data.dbPassword || !data.dbName || !data.passphrase || !data.baseUrl || !data.hopperBaseUrl || !data.accessProtocol || !data.tokenCreationPassword) {
                 throw new Error("Config incomplete!");
             }
 
@@ -45,6 +46,7 @@ export namespace Config {
             this.passphrase = data.passphrase;
             this.fetchInterval = data.fetchInterval || 60*5;
             this.appId = data.appId || "";
+            this.tokenCreationPassword = data.tokenCreationPassword;
 
             if (!data.privateKey || !data.publicKey) {
                 let keypair: any = utils.getKeyPair(this.passphrase);
@@ -54,6 +56,14 @@ export namespace Config {
                 this.privateKey = data.privateKey;
                 this.publicKey = data.publicKey;
             }
+        }
+
+        generateNewToken(): string {
+            return "";
+        }
+
+        tryToUseToken(): boolean {
+            return true;
         }
     }
 
