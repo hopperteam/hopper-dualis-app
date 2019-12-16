@@ -12,8 +12,8 @@ export default class GeneralHandler extends Handler {
         super();
         this.router.get("/", this.ping.bind(this));
         this.router.post("/register", this.register.bind(this));
-        this.router.put("/resetPassword", this.resetPassword.bind(this));
-        this.router.delete("/user", this.deleteUser.bind(this));
+        this.router.post("/updatePassword", this.resetPassword.bind(this));
+        this.router.post("/deleteUser", this.deleteUser.bind(this));
     }
 
     private async ping(req: express.Request, res: express.Response): Promise<void> {
@@ -30,9 +30,7 @@ export default class GeneralHandler extends Handler {
             req.body.password = utils.encryptPassword(req.body.password);
             //subscribe user to hopper
             await User.create(req.body);
-            res.json({
-                "status": "success"
-            });
+            utils.returnMessage("Success!", res);
         } catch (e) {
             utils.handleError(e, log, res);
         }
@@ -47,9 +45,7 @@ export default class GeneralHandler extends Handler {
             let user: IUser | null = await User.findOneAndUpdate({ username: req.body.username, password: oldPassword }, { password: newPassword });
             if (!user)
                 throw new Error("Invalid user data");
-            res.json({
-                "status": "success"
-            });
+            utils.returnMessage("Success!", res);
         } catch (e) {
             utils.handleError(e, log, res);
         }
@@ -60,9 +56,7 @@ export default class GeneralHandler extends Handler {
             let user: IUser | null = await User.findOneAndDelete({ username: req.query.username, password: password });
             if (!user)
                 throw new Error("Invalid user data");
-            res.json({
-                "status": "success"
-            });
+            utils.returnMessage("Success!", res);
         } catch (e) {
             utils.handleError(e, log, res);
         }

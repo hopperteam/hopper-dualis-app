@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hopper Dualis Integration</title>
+        <script>
+            function main() {
+                const urlParams = new URLSearchParams(window.location.search);
+
+                let msg = urlParams.get("msg");
+                if (msg === null) {
+                    return;
+                }
+                window.location.search = "";
+                alert(msg);
+            }
+            window.addEventListener("load",main,false);
+
+        </script>
+    </head>
+    <body>
+    <fieldset>
+        <legend>Register</legend>
+
+        <form action="/register" method="post">
+            <label for="username0" >Username:</label>
+            <input name="username" id="username0" type="text"/>
+            <label for="password0" >Password:</label>
+            <input name="password" id="password0" type="password"/>
+            <input type="submit" content="Register" />
+        </form>
+    </fieldset>
+
+    <fieldset>
+        <legend>Register</legend>
+
+        <form action="updatePassword" method="post">
+            <label for="username1" >Username:</label>
+            <input name="username" id="username1" type="text"/>
+            <label for="password1" >Old Password:</label>
+            <input name="oldPassword" id="password1" type="password"/>
+            <label for="password2" >New Password:</label>
+            <input name="newPassword" id="password2" type="password"/>
+            <input type="submit" content="Update" />
+        </form>
+    </fieldset>
+
+    <fieldset>
+        <legend>Register</legend>
+
+        <form action="deleteUser" method="post">
+            <label for="username2" >Username:</label>
+            <input name="username" id="username2" type="text"/>
+            <label for="password3" >Old Password:</label>
+            <input name="password" id="password3" type="password"/>
+            <input type="submit" content="Delete" />
+        </form>
+    </fieldset>
+    </body>
+</html>

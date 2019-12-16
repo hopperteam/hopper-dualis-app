@@ -6,10 +6,11 @@ import Log from './log';
 export function handleError(err: Error, log: Log, res: express.Response, statusCode: number = 400) {
     log.error(err.message);
     res.status(statusCode);
-    res.json({
-        "status": "error",
-        "reason": err.message
-    });
+    returnMessage("Error: " + err.message, res);
+}
+
+export function returnMessage(msg: string, res: express.Response) {
+    res.redirect("/?msg=" + encodeURIComponent(msg));
 }
 
 export function encryptPassword(password: string): string {

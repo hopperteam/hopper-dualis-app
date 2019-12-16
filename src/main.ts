@@ -14,7 +14,7 @@ class DualisApp {
     constructor() {
         this.server = express();
         this.server.use(express.static("web", { 'extensions': ['html'] }));
-        this.server.use(bodyParser.urlencoded());
+        this.server.use(bodyParser.urlencoded({extended: true}));
     }
 
     private async loadConfig(): Promise<boolean> {
