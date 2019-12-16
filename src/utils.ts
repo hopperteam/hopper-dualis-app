@@ -1,5 +1,6 @@
 ﻿import * as express from 'express';
 import * as crypto from 'crypto';
+import { Config } from "./config";
 
 import Log from './log';
 
@@ -14,11 +15,13 @@ export function returnMessage(msg: string, res: express.Response) {
 }
 
 export function encryptPassword(password: string): string {
-    return "hello";
+    let encr = crypto.publicEncrypt(Config.instance.publicKey, Buffer.from(password));
+    return encr.toString();
 }
 
 export function decryptPassword(password: string): string {
-    return "hello";
+    let decr = crypto.privateDecrypt(Config.instance.privateKey, Buffer.from(password));
+    return decr.toString();
 }
 
 export function getKeyPair(passphrase: string): any {
@@ -38,23 +41,17 @@ export function getKeyPair(passphrase: string): any {
     return { privateKey: privateKey, publicKey: publicKey };
 }
 
-/*
-export function generateId(): string {
-    const hash = crypto.createHash('sha256');
-    hash.update(crypto.randomBytes(128).toString('base64'));
-    return hash.digest('hex');
+export function encryptContent(content: any): any {
+    content = JSON.stringify(content);
+    const sha = crypto.createHash('sha256');
+    sha.update(content);
+    let hash = sha.digest('hex');
+    let encryptedHash = crypto.privateEncrypt(
+        {
+            key: Config.instance.privateKey,
+            passphrase: Config.instance.passphrase
+        },
+        Buffer.from(hash));
+    let result = Buffer.from(JSON.stringify({ "verify": encryptedHash.toString(), "data": content })).toString('base64');
+    return result;
 }
-
-export function decryptContent(key: string, content: any): any {
-    content = JSON.parse(Buffer.from(content, "base64").toString());
-
-    let decryptedHash = crypto.publicDecrypt(Buffer.from(key, "base64"), Buffer.from(content.verify, "base64")).toString();
-    const sha256 = crypto.createHash("sha256");
-    sha256.update(JSON.stringify(content.data));
-    let createdHash = sha256.digest("hex");
-    if (decryptedHash != createdHash)
-        throw new Error("Verification failed");
-
-    return content.data;
-}
-*/
