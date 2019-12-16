@@ -5,7 +5,7 @@ import Log from './log';
 import { Config } from "./config";
 const log = new Log("DualisApp");
 
-//import AuthMiddleware from './handler/authMiddleware';
+import GeneralHandler from './handler/generalHandler';
 
 class DualisApp {
 
@@ -50,11 +50,7 @@ class DualisApp {
 
         //setInterval(AuthMiddleware.daemon, 60000);
 
-        //this.server.use('/api/v1', new Handler().getRouter());
-        //
-        //this.server.use(AuthMiddleware.auth());
-        //this.server.use('/api/v1', new Handler().getRouter());
-
+        this.server.use('/api/v1', new GeneralHandler().getRouter());
 
         return true;
     }
