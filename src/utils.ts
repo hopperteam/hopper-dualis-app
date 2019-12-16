@@ -16,11 +16,14 @@ export function returnMessage(msg: string, res: express.Response) {
 
 export function encryptPassword(password: string): string {
     let encr = crypto.publicEncrypt(Config.instance.publicKey, Buffer.from(password));
-    return encr.toString();
+    return encr.toString('base64');
 }
 
 export function decryptPassword(password: string): string {
-    let decr = crypto.privateDecrypt(Config.instance.privateKey, Buffer.from(password));
+    let decr = crypto.privateDecrypt({
+        key: Config.instance.privateKey,
+        passphrase: Config.instance.passphrase
+    }, Buffer.from(password, 'base64'));
     return decr.toString();
 }
 
