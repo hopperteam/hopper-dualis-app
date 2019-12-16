@@ -1,10 +1,14 @@
 import * as fs from "fs";
 import * as utils from './utils';
+import HopperApi from './hopper/api';
 
 export namespace Config {
 
     export function parseConfig(file: string) {
         instance = new ConfigHolder(JSON.parse(fs.readFileSync(file).toString()));
+    }
+
+    export function updateConfig(file: string) {
         fs.writeFileSync(file, JSON.stringify(instance));
     }
 
@@ -20,6 +24,7 @@ export namespace Config {
         readonly privateKey: string;
         readonly publicKey: string;
         readonly fetchInterval: number;
+        appId: string;
 
         constructor(data: any) {
             if (!data.dbHost || !data.dbUser || !data.dbPassword || !data.dbName || !data.passphrase || !data.hopperBaseUrl) {
@@ -35,6 +40,7 @@ export namespace Config {
             this.hopperBaseUrl = data.hopperBaseUrl;
             this.passphrase = data.passphrase;
             this.fetchInterval = data.fetchInterval || 60*5;
+            this.appId = data.appId || "";
 
             if (!data.privateKey || !data.publicKey) {
                 let keypair: any = utils.getKeyPair(this.passphrase);

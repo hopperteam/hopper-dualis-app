@@ -3,6 +3,8 @@ import * as mongoose from 'mongoose';
 import bodyParser = require('body-parser');
 import Log from './log';
 import { Config } from "./config";
+import HopperApi from './hopper/api';
+
 const log = new Log("DualisApp");
 
 import GeneralHandler from './handler/generalHandler';
@@ -26,6 +28,10 @@ class DualisApp {
             } else {
                 log.info("Loading config from " + process.argv[2]);
                 Config.parseConfig(process.argv[2]);
+                if (Config.instance.appId == "") {
+                    Config.instance.appId = await HopperApi.registerApp();
+                }
+                Config.updateConfig(process.argv[2]);
             }
         } catch (e) {
             log.error("Could not start: " + e.toString());
