@@ -11,10 +11,6 @@ export class DualisApi {
     private sessionParams: string = "";
     private sessionCookie: string = "";
 
-    async getGradesFor(user: DualisUser): Promise<UserGrades> {
-        return new UserGrades();
-    }
-
     async login(user: DualisUser): Promise<boolean> {
         let th = this;
         return new Promise<boolean>(function (resolve, error) {
@@ -52,9 +48,9 @@ export class DualisApi {
         });
     }
 
-    async getGrades(): Promise<string> {
+    async getGrades(): Promise<UserGrades> {
         let th = this;
-        return new Promise<string>(function (resolve, error) {
+        return new Promise<UserGrades>(function (resolve, error) {
             let x = request.get("https://dualis.dhbw.de/scripts/mgrqispi.dll?APPNAME=CampusNet&PRGNAME=STUDENT_RESULT&ARGUMENTS=" + th.sessionParams + ",-N0,-N000000000000000,-N000000000000000,-N000000000000000,-N0,-N000000000000000", {
                 headers: {
                     "cookie": th.sessionCookie
@@ -75,8 +71,8 @@ export class DualisApi {
                         grades.addGrade(subj, grade);
                     }
                 });
+                resolve(grades);
             });
-            resolve("response");
         });
     }
 }
