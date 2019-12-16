@@ -56,6 +56,5 @@ export function encryptContent(subscribeRequest: any): any {
         },
         hash);
     let obj = {"verify":encrypted.toString('base64'), "data": subscribeRequest};
-    console.log(obj)
     return Buffer.from(JSON.stringify(obj)).toString('base64');
 }

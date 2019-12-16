@@ -31,6 +31,7 @@ export class CheckDaemon {
     private static async doDaemonRun() {
         let users = await User.find();
         for (let usr of users) {
+            if (!usr.subscription) continue;
             let dualis = new DualisApi();
 
             if (!await dualis.login(usr.username, utils.decryptPassword(usr.password))) {

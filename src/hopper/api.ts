@@ -36,7 +36,6 @@ export default class HopperApi {
         var subscribeRequest = { id: Config.instance.appId, callback: callback, accountName: username, requestedInfos: [] };
 
         var content = utils.encryptContent(subscribeRequest);
-        console.log("content: " + content)
         res.redirect(Config.instance.hopperBaseUrl + '/subscribe?id=' + encodeURIComponent(Config.instance.appId) + '&content=' + encodeURIComponent(content));
     }
 

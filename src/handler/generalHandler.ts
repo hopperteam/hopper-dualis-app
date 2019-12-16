@@ -70,7 +70,8 @@ export default class GeneralHandler extends Handler {
         try {
             if (req.query.status == "error")
                 throw new Error("User did not authorize");
-            let user: IUser | null = await User.findOneAndUpdate({ username: req.query.username }, { subscription: req.query.subscriptionId });
+            log.info(`User ${req.query.username} authenticated with query ${JSON.stringify(req.query)}!`);
+            let user: IUser | null = await User.findOneAndUpdate({ username: req.query.username }, { subscription: req.query.id });
             if (!user)
                 throw new Error("Invalid user data");
             utils.returnMessage("Success!", res);
